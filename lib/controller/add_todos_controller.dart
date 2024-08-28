@@ -16,7 +16,6 @@ class AddTodosController extends GetxController{
 
 
 
-
   TextEditingController titleC = TextEditingController();
   TextEditingController descriptionC = TextEditingController();
   TextEditingController priorityC = TextEditingController();
@@ -90,6 +89,10 @@ class AddTodosController extends GetxController{
   }
 
 
+
+
+
+
   void startReminderTimer(TodoModel todo) {
     final now = DateTime.now();
     final reminderTime = DateTime(
@@ -101,25 +104,9 @@ class AddTodosController extends GetxController{
       Timer(duration, () async {
 
 
-        const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-          'your_channel_id', // Channel ID
-          'your_channel_name', // Channel Name
-          channelDescription: 'Channel Description',
-          importance: Importance.max,
-          priority: Priority.high,
-        );
+        _sendNotification(todo);
 
-        const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
 
-        await flutterLocalNotificationsPlugin.show(
-          todo.id ?? 0, // Notification ID
-          'Reminder: ${todo.title}', // Notification Title
-          todo.description, // Notification Body
-          platformChannelSpecifics,
-          payload: 'Todo ID: ${todo.id}', // Payload
-        );
 
       });
     }
@@ -235,5 +222,30 @@ class AddTodosController extends GetxController{
 
 Get.toNamed('/homeScreen');
 
+  }
+
+
+
+
+  void _sendNotification(TodoModel todo) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'your_channel_id', // Channel ID
+      'your_channel_name', // Channel Name
+      channelDescription: 'Channel Description',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      todo.id ?? 0, // Notification ID
+      'Reminder: ${todo.title}', // Notification Title
+      todo.description, // Notification Body
+      platformChannelSpecifics,
+      payload: 'Todo ID: ${todo.id}', // Payload
+    );
   }
 }

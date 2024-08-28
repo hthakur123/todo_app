@@ -123,18 +123,18 @@ controller:  controller.searchC,
                           width: 30,
                         ),
 
-                        SizedBox(width: 15,),
+                        const SizedBox(width: 15,),
                         Apputile.widgetText(
 
                           text: "Create todos",
                           fontWeight: FontWeight.bold
 
                         ),
-                        SizedBox(width: 15,),
+                        const SizedBox(width: 15,),
 
                         IconButton(onPressed:  () {
 
-                        }, icon: Icon(Icons.arrow_forward_ios_outlined))
+                        }, icon: const Icon(Icons.arrow_forward_ios_outlined))
                       ],
                     )
                   ),
@@ -145,10 +145,10 @@ controller:  controller.searchC,
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount:   controller.searchList.isNotEmpty?controller.searchList.length:controller.todoList.length,
+                itemCount:   controller.searchC.text.isNotEmpty?controller.searchList.length:controller.todoList.length,
                 itemBuilder:  (context, index) {
 
-                  final todo  = controller.searchList.isNotEmpty?controller.searchList[index]:controller.todoList[index];
+                  final todo  =  controller.searchC.text.isNotEmpty?controller.searchList[index]:controller.todoList[index];
                 return  InkWell(
                    onTap: () {
 
